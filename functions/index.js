@@ -6,7 +6,6 @@ admin.initializeApp();
 const db = admin.database();
 const auth = admin.auth();
 
-// region user
 exports.register_user = functions.https.onCall((data, _) => {
     const user = {
         email: common.requireNotNull(data.email),
@@ -51,4 +50,3 @@ exports.subscribe_on_dream = functions.https.onCall((data, context) => {
     db.ref("UsersDreams").push(userDream);
     return {status: "ok"};
 });
-// endregion
