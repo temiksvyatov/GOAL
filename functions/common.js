@@ -8,7 +8,7 @@ const functions = require("firebase-functions");
  * @param{any|null} value nullable value
  * @return{any} value if it not null else throws exception "invalid-argument"
  */
-exports.requireNotNull = function(value) {
+exports.validateNotNull = function(value) {
     if (value != null) return value;
 
     throw new functions.https.HttpsError(
