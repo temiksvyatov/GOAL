@@ -1,0 +1,9 @@
+{
+  "plugins": [],
+  "source": {
+    "exclude": ["functions/node_modules", "functions/common.js", "functions/index.js"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module"
+}

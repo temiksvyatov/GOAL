@@ -15,5 +15,10 @@
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  "emulators": {
+    "functions": {
+      "port": "4999"
+    }
   }
 }

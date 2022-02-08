@@ -1,0 +1,1 @@
+jsdoc functions -r -c functions/jsdocConfig.json
