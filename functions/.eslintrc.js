@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 module.exports = {
     root: true,
     env: {
@@ -11,6 +12,7 @@ module.exports = {
     rules: {
         quotes: ["error", "double"],
         indent: ["warn", 4],
+        "max-len": ["warn", 160],
     },
     parserOptions: {
         sourceType: "module",
