@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const common = require("./common");
 
 const {getDreamsByTags, getDetailedDream} = require("./src/dreams/getting");
-const {subscribeOnDream} = require("./src/user/activity");
+const {subscribeOnDream, getUserSubscriptions, getUserDetails} = require("./src/user/activity");
 const {registerUser} = require("./src/user/account");
 const {validateNotNull} = require("./common");
 
@@ -20,6 +20,32 @@ exports.register_user = functions.https.onCall((data, _) => {
     const photoURL = data.photoURL;
 
     return registerUser(email, name, password, photoURL, db, auth);
+});
+
+exports.get_user_subscribtions = functions.https.onCall((data, context) => {
+    if (!context.auth && !TEST) {
+        throw new functions.https.HttpsError(
+            "unauthenticated",
+            "only authenticated users can dreaming"
+        );
+    }
+
+    const userId = validateNotNull(data.user_id);
+
+    return getUserSubscriptions(userId, db);
+});
+
+exports.get_user_details = functions.https.onCall((data, context) => {
+    if (!context.auth && !TEST) {
+        throw new functions.https.HttpsError(
+            "unauthenticated",
+            "only authenticated users allowed to see details"
+        );
+    }
+
+    const userId = validateNotNull(data.user_id);
+
+    return getUserDetails(userId, db);
 });
 
 exports.subscribe_on_dream = functions.https.onCall((data, context) => {
@@ -39,7 +65,7 @@ exports.subscribe_on_dream = functions.https.onCall((data, context) => {
 exports.get_dreams_by_tags = functions.https.onCall((data, _) => {
     const tags = common.validateNotNull(data.tags).split(",");
 
-    return getDreamsByTags(tags);
+    return getDreamsByTags(tags, db);
 });
 
 exports.get_dream_details = functions.https.onCall((data, context) => {

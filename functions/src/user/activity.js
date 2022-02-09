@@ -12,3 +12,30 @@ exports.subscribeOnDream = (userId, dreamId, db) => {
     db.ref("UsersDreams").push(userDream);
     return {status: "ok"};
 };
+
+/**
+ * @param {string} userId
+ * @param {database.Database} db
+ * @return {Promise<Array<DreamSubscription>>}
+ */
+exports.getUserSubscriptions = (userId, db) => db.ref("UsersDreams").get()
+    .then((usersDreams) =>
+        Object.values(usersDreams.val()).filter((userDream) => {
+            console.log(userId);
+            console.log(userDream.user_id);
+            return userDream.user_id === userId;
+        })
+    );
+
+/**
+ * @param {string} userId
+ * @param {database.Database} db
+ * @return {Promise<UserDetails>}, characteristics - dictionary<string: number>
+ */
+exports.getUserDetails = (userId, db) => db.ref("Users").get()
+    .then((userSnapshot) => {
+        const user = userSnapshot.val();
+        user.user_id = userId;
+
+        return user;
+    });

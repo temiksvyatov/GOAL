@@ -19,6 +19,12 @@
   "emulators": {
     "functions": {
       "port": "4999"
+    },
+    "database": {
+      "port": "9001"
+    },
+    "hosting": {
+      "port": "5002"
     }
   }
 }
