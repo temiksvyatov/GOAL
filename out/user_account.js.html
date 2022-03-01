@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: user/account.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,46 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: user/account.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @param {string} email
+ * @param {string} name
+ * @param {string} password
+ * @param {string} photoURL
+ * @param {Database} db
+ * @param {Auth} auth
+ * @return {Promise&lt;{status: string}|{code: number, reason: string}>}
+ */
+exports.registerUser = (email, name, password, photoURL, db, auth) => auth.createUser({
+    email: email,
+    displayName: name,
+    password: password,
+})
+    .then((record) => {
+        db.ref("Users").child(record.uid).set({
+            name: name,
+            photoURL: photoURL,
+        }).catch((reason) => {
+            console.log(reason);
+            return {code: 403, reason: "problem with authentication"};
+        });
 
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+        return {status: "ok"};
+    }).catch((reason) => {
+        console.log(reason);
+        return {code: 403, reason: "problem with authentication"};
+    });
+</code></pre>
+        </article>
+    </section>
 
 
 
