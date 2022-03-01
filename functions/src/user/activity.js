@@ -32,7 +32,7 @@ exports.getUserSubscriptions = (userId, db) => db.ref("UsersDreams").get()
  * @param {database.Database} db
  * @return {Promise<UserDetails>}, characteristics - dictionary<string: number>
  */
-exports.getUserDetails = (userId, db) => db.ref("Users").get()
+exports.getUserDetails = (userId, db) => db.ref("Users").child(userId).get()
     .then((userSnapshot) => {
         const user = userSnapshot.val();
         user.user_id = userId;
